@@ -1,7 +1,7 @@
 // Entry point for service-d — the About/Admin microservice.
 require('dotenv').config();
 const express = require('express');
-const requestLogger = require('./middleware/requestLogger');
+const requestLogger = require('./middleware/request_logger');
 const aboutRouter = require('./routes/about.route');
 
 // Create the Express application

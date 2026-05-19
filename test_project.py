@@ -30,7 +30,7 @@ try:
     text = ""
 
     # getting details of team manager
-    url = d + "/api/about/"
+    url = d + "/api/about"
 
     data = requests.get(url)
 
@@ -55,7 +55,7 @@ try:
     text = ""
 
     # getting the report
-    url = c + "/api/report/?id=123123&year=2026&month=1"
+    url = c + "/api/report?id=123123&year=2026&month=1"
 
     data = requests.get(url)
 
@@ -79,7 +79,7 @@ print("----------------------------------")
 try:
     text = ""
 
-    url = c + "/api/add/"
+    url = c + "/api/add"
 
     data = requests.post(url,
           json={'userid': 123123, 'description': 'milk 9', 'category': 'food', 'sum': 8})
@@ -103,7 +103,7 @@ try:
     text = ""
 
     # getting the report
-    url = c + "/api/report/?id=123123&year=2026&month=1"
+    url = c + "/api/report?id=123123&year=2026&month=1"
 
     data = requests.get(url)
 

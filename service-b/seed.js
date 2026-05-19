@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user.model');
 
 // The single required test user as specified in the project document
-const SEED_USER = {
+const seedUser = {
     id: 123123,
     first_name: 'mosh',
     last_name: 'israeli'
@@ -18,8 +18,8 @@ async function seed() {
 
     // Upsert so re-running the script is safe — will not create duplicates
     const result = await User.findOneAndUpdate(
-        { id: SEED_USER.id },
-        SEED_USER,
+        { id: seedUser.id },
+        seedUser,
         { upsert: true, new: true }
     );
 

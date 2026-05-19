@@ -2,7 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
-const requestLogger = require('./middleware/requestLogger');
+const requestLogger = require('./middleware/request_logger');
 const logsRouter = require('./routes/logs.route');
 
 // Create the Express application

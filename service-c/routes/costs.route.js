@@ -7,7 +7,7 @@ const Report = require('../models/report.model');
 const logger = require('../config/logger');
 
 // The five supported cost categories — any other value is rejected.
-const CATEGORIES = ['food', 'health', 'housing', 'sports', 'education'];
+const categories = ['food', 'education', 'health', 'housing', 'sports'];
 
 // Adds a new cost item after validating all required fields and business rules.
 router.post('/add', async (req, res, next) => {
@@ -25,8 +25,8 @@ router.post('/add', async (req, res, next) => {
         }
 
         // Reject any category that is not in the supported list
-        if (!CATEGORIES.includes(category)) {
-            const error = new Error(`Category must be one of: ${CATEGORIES.join(', ')}`);
+        if (!categories.includes(category)) {
+            const error = new Error(`Category must be one of: ${categories.join(', ')}`);
             error.status = 400;
             error.code = 'INVALID_CATEGORY';
             return next(error);
@@ -173,7 +173,7 @@ router.get('/report', async (req, res, next) => {
 
         // Initialise every category with an empty array so they always appear in the response
         const grouped = {};
-        for (const cat of CATEGORIES) {
+        for (const cat of categories) {
             grouped[cat] = [];
         }
 
@@ -188,7 +188,7 @@ router.get('/report', async (req, res, next) => {
         }
 
         // Build the response costs array — each element is a single-key object per category
-        const costsArray = CATEGORIES.map(cat => ({ [cat]: grouped[cat] }));
+        const costsArray = categories.map(cat => ({ [cat]: grouped[cat] }));
 
         // Step 4 — persist the computed report for future cache hits (past months only)
         if (isPast) {
