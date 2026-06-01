@@ -75,8 +75,26 @@ router.post('/add', async (req, res, next) => {
         const { id, first_name, last_name, birthday } = req.body;
 
         // All four fields are mandatory per the project specification
-        if (id === undefined || id === null || !first_name || !last_name || !birthday) {
-            const error = new Error('Missing required fields: id, first_name, last_name, birthday');
+        if (id === undefined || id === null) {
+            const error = new Error('id is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (!first_name) {
+            const error = new Error('first_name is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (!last_name) {
+            const error = new Error('last_name is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (!birthday) {
+            const error = new Error('birthday is missing');
             error.status = 400;
             error.code = 'MISSING_FIELDS';
             return next(error);

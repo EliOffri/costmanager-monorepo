@@ -17,10 +17,34 @@ router.post('/add', async (req, res, next) => {
         const { userid, description, category, sum, date } = req.body;
 
         // All four core fields must be present in the request body
-        if (userid === undefined || userid === null || !description || !category || sum === undefined || sum === null) {
-            const error = new Error('Missing required fields: userid, description, category, sum');
+        if (userid === undefined || userid === null) {
+            const error = new Error('userid is missing');
             error.status = 400;
             error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (!description) {
+            const error = new Error('description is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (!category) {
+            const error = new Error('category is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (sum === undefined || sum === null) {
+            const error = new Error('sum is missing');
+            error.status = 400;
+            error.code = 'MISSING_FIELDS';
+            return next(error);
+        }
+        if (Number(sum) < 0) {
+            const error = new Error('cost cannot be a negative value');
+            error.status = 400;
+            error.code = 'NEGATIVE_COST';
             return next(error);
         }
 
@@ -110,8 +134,20 @@ router.get('/report', async (req, res, next) => {
         const { id, year, month } = req.query;
 
         // All three query parameters are required
-        if (!id || !year || !month) {
-            const error = new Error('Missing required query parameters: id, year, month');
+        if (!id) {
+            const error = new Error('id is missing');
+            error.status = 400;
+            error.code = 'MISSING_PARAMS';
+            return next(error);
+        }
+        if (!year) {
+            const error = new Error('year is missing');
+            error.status = 400;
+            error.code = 'MISSING_PARAMS';
+            return next(error);
+        }
+        if (!month) {
+            const error = new Error('month is missing');
             error.status = 400;
             error.code = 'MISSING_PARAMS';
             return next(error);
@@ -122,8 +158,20 @@ router.get('/report', async (req, res, next) => {
         const numMonth = Number(month);
 
         // Reject non-numeric parameter values
-        if (isNaN(userid) || isNaN(numYear) || isNaN(numMonth)) {
-            const error = new Error('Parameters id, year, and month must be numbers');
+        if (isNaN(userid)) {
+            const error = new Error('id must be a number');
+            error.status = 400;
+            error.code = 'INVALID_PARAMS';
+            return next(error);
+        }
+        if (isNaN(numYear)) {
+            const error = new Error('year must be a number');
+            error.status = 400;
+            error.code = 'INVALID_PARAMS';
+            return next(error);
+        }
+        if (isNaN(numMonth)) {
+            const error = new Error('month must be a number');
             error.status = 400;
             error.code = 'INVALID_PARAMS';
             return next(error);
